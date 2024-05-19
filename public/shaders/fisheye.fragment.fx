@@ -12,5 +12,10 @@ out vec4 FragColor;
 
 void main() {
     // Color
-    FragColor = texture(image, model_uv);
+    vec2 scaledUV = ((model_uv * 2.0) - 1.0);
+    float theta = atan(scaledUV.y, scaledUV.x);
+    float radius = pow(length(scaledUV), 1.5);
+    vec2 fishEyeUV = vec2(radius * cos(theta), radius * sin(theta));
+    vec2 finalUV = 0.5 * (fishEyeUV + 1.0);
+    FragColor = texture(image, finalUV);
 }
